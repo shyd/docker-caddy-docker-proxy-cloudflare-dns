@@ -1,2 +1,2 @@
-# docker-caddy-proxy-cloudflare
-Caddy with docker-proxy and cloudflare dns
+# docker-caddy-docker-proxy-cloudflare-dns
+Caddy with caddy-docker-proxy and cloudflare-dns

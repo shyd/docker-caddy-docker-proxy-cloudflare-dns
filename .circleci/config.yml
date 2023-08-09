@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    steps:
+    - checkout
+    - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+    - run: docker build -t shyd/caddy-docker-proxy-cloudflare-dns .
+    - run: docker push shyd/caddy-docker-proxy-cloudflare-dns
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build:
+        context:
+          - general
+        filters:
+          branches:
+            only: main
+# scheduled jobs with context fail (Nov. 2021)
+  weekly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 0"
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - build:
+          context:
+            - general
